@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingLotApp", "ParkingLotApp\ParkingLotApp.csproj", "{72129653-6429-426A-9BE0-BD1A46A56C6E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingLotApp.Model", "ParkingLotApp.Model\ParkingLotApp.Model.csproj", "{3BF9C866-CF7A-4455-81CC-364A4E93CB6D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{72129653-6429-426A-9BE0-BD1A46A56C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72129653-6429-426A-9BE0-BD1A46A56C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72129653-6429-426A-9BE0-BD1A46A56C6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BF9C866-CF7A-4455-81CC-364A4E93CB6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BF9C866-CF7A-4455-81CC-364A4E93CB6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BF9C866-CF7A-4455-81CC-364A4E93CB6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BF9C866-CF7A-4455-81CC-364A4E93CB6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
