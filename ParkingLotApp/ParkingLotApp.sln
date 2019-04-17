@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingLotApp", "ParkingLotApp\ParkingLotApp.csproj", "{72129653-6429-426A-9BE0-BD1A46A56C6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingLotApp.WebUI", "ParkingLotApp\ParkingLotApp.WebUI.csproj", "{72129653-6429-426A-9BE0-BD1A46A56C6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingLotApp.Model", "ParkingLotApp.Model\ParkingLotApp.Model.csproj", "{3BF9C866-CF7A-4455-81CC-364A4E93CB6D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingLotApp.Models", "ParkingLotApp.Model\ParkingLotApp.Models.csproj", "{3BF9C866-CF7A-4455-81CC-364A4E93CB6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
