@@ -9,7 +9,11 @@ namespace ParkingLotApp.WebUI.Controllers
 {
     public class ParkingLotController : Controller
     {
-        private List<ParkingLot> ParkingLots = new List<ParkingLot>();
+        private List<ParkingLot> ParkingLots = new List<ParkingLot>
+        {
+            new ParkingLot { Id = 1, Address = "1500 University", Location = "On street", Floor = "None" },
+            new ParkingLot { Id = 2, Address = "600 Guadalupe", Location = "On street", Floor = "None" },
+        };
 
         //parkinglot/index
         public IActionResult Index()
@@ -30,5 +34,25 @@ namespace ParkingLotApp.WebUI.Controllers
 
             return View(nameof(Index), ParkingLots);
         }
+
+        public IActionResult Detail(int id)
+        {
+           var ParkingLot = ParkingLots.Single(p => p.Id == id);
+
+           return View(ParkingLot);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var ParkingLot = ParkingLots.Single(p => p.Id == id);
+
+            ParkingLots.Remove(ParkingLot);
+
+            return View(nameof(Index), ParkingLots);
+        }
+
+        
+            
+
     }
 }
