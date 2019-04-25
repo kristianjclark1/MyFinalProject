@@ -25,6 +25,7 @@
             <td>@parkingLot.Handicap</td>
             <td>
                 <a asp-controller="ParkingLot" asp-action="detail" asp-route-id="@parkingLot.Id">Detail</a> |
+                <a asp-controller="ParkingLot" asp-action="edit" asp-route-id="@parkingLot.Id">Edit</a> |
                 <a href="#" class="js-open-modal" data-parking-lot-id="@parkingLot.Id">Delete</a>
             </td>
         </tr>
