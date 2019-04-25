@@ -24,7 +24,7 @@ namespace ParkingLotApp.WebUI.Controllers
         //GET parkinglot/add
         public IActionResult Add()
         {
-            return View();
+            return View("Form");
         }
 
         [HttpPost]
@@ -47,6 +47,27 @@ namespace ParkingLotApp.WebUI.Controllers
             var ParkingLot = ParkingLots.Single(p => p.Id == id);
 
             ParkingLots.Remove(ParkingLot);
+
+            return View(nameof(Index), ParkingLots);
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var ParkingLot = ParkingLots.Single(p => p.Id == id);
+
+            return View("Form", ParkingLot);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, ParkingLot updatedParkingLot )
+        {
+            var oldParkingLot = ParkingLots.Single(p => p.Id == id);
+            oldParkingLot.Address = updatedParkingLot.Address;
+            oldParkingLot.Location = updatedParkingLot.Location;
+            oldParkingLot.Floor = updatedParkingLot.Floor;
+            oldParkingLot.Spaces = updatedParkingLot.Spaces;
+            oldParkingLot.Size = updatedParkingLot.Size;
+            oldParkingLot.Handicap = updatedParkingLot.Handicap;
 
             return View(nameof(Index), ParkingLots);
         }
