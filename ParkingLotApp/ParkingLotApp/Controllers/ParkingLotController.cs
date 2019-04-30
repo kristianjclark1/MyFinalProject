@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ParkingLotApp.Models;
+using ParkingLotApp.Domain.Models;
 
 namespace ParkingLotApp.WebUI.Controllers
 {
@@ -30,9 +30,14 @@ namespace ParkingLotApp.WebUI.Controllers
         [HttpPost]
         public IActionResult Add(ParkingLot newParkingLot)
         {
-            ParkingLots.Add(newParkingLot);
+            if (ModelState.IsValid) // all required fields are completed
+            {
+                //We should be able to add the new parking lot
+                ParkingLots.Add(newParkingLot);
+                return View(nameof(Index), ParkingLots);
+            }
 
-            return View(nameof(Index), ParkingLots);
+            return View("Form");
         }
 
         public IActionResult Detail(int id)
@@ -61,15 +66,24 @@ namespace ParkingLotApp.WebUI.Controllers
         [HttpPost]
         public IActionResult Edit(int id, ParkingLot updatedParkingLot )
         {
-            var oldParkingLot = ParkingLots.Single(p => p.Id == id);
-            oldParkingLot.Address = updatedParkingLot.Address;
-            oldParkingLot.Location = updatedParkingLot.Location;
-            oldParkingLot.Floor = updatedParkingLot.Floor;
-            oldParkingLot.Spaces = updatedParkingLot.Spaces;
-            oldParkingLot.Size = updatedParkingLot.Size;
-            oldParkingLot.Handicap = updatedParkingLot.Handicap;
+            if (ModelState.IsValid)
+            {
 
-            return View(nameof(Index), ParkingLots);
+                var oldParkingLot = ParkingLots.Single(p => p.Id == id);
+
+                oldParkingLot.Address = updatedParkingLot.Address;
+                oldParkingLot.Location = updatedParkingLot.Location;
+                oldParkingLot.Floor = updatedParkingLot.Floor;
+                oldParkingLot.Spaces = updatedParkingLot.Spaces;
+                oldParkingLot.Size = updatedParkingLot.Size;
+                oldParkingLot.Handicap = updatedParkingLot.Handicap;
+
+                return View(nameof(Index), ParkingLots);
+            }
+
+            return View("Form", updatedParkingLot); //By passing updatedParkingLot
+                                                    //We trigger the logic
+                                                    //for Edit within the Form.cshtml        
         }
 
         
