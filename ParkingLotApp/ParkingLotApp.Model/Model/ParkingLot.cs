@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace ParkingLotApp.Models
+namespace ParkingLotApp.Domain.Models
 {
     public class ParkingLot
     {
         public int Id { get; set; }
+        
+        [Required(ErrorMessage = "Don't forget to add the location of the lot")]
         public string Address { get; set; }
+
+        [Required]
         public string Location { get; set; }
+
+        [Required]
         public string Floor { get; set; }
+
         public int Spaces { get; set; }
         [Display(Name ="Lot Size")]
         public int Size { get; set; }
