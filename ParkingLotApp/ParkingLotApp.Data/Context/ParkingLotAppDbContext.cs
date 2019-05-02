@@ -6,13 +6,22 @@ using System.Text;
 
 namespace ParkingLotApp.Data.Context
 {
-    //This class will translate Models into database tables
+    //DbContext -> represent a session to a db and provides APIs
+    //to communicate with db
     public class ParkingLotAppDbContext : DbContext
     {
-       //Per model that we want to turn into table
-       //we add it as a dbset
+       //Represents a collection (table) of a given entity/model
+       //They map to table by default
+        public DbSet<ParkingLot> parkingLots { get; set; }
 
-        DbSet<ParkingLot> parkingLots { get; set; }
+        //Virtual method designed to be overridden
+        //You can provide configuration info for the context
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //Connection string is divided in 3 elements
+            //server - database - authentication
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=parkinglotapp;Trusted_Connection=true");
+        }
          
     }
 }

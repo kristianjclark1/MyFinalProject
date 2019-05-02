@@ -22,5 +22,6 @@ namespace ParkingLotApp.Domain.Models
         [Display(Name ="Lot Size")]
         public int Size { get; set; }
         public bool Handicap { get; set; }
+        public string Geomap { get; set; }
     }
 }
