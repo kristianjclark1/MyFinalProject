@@ -20,23 +20,65 @@ namespace ParkingLotApp.Data.Implementation.SqlServer
             }
         }
 
+        public ICollection<ParkingLot> GetAllParkingLots()
+        {
+            using (var context = new ParkingLotAppDbContext())
+            {
+                return context.parkingLots.ToList(); //Now it is a collection
+            }
+        }
         public ParkingLot Create(ParkingLot newparkingLot)
         {
-            throw new NotImplementedException();
+            using (var context = new ParkingLotAppDbContext())
+            {
+                context.parkingLots.Add(newparkingLot);
+                context.SaveChanges();
+
+                return newparkingLot; //newparkingLot.Id will be populated with new DB volumn.
+            }
         }
 
         public ParkingLot Update(ParkingLot updatedparkingLot)
         {
-            throw new NotImplementedException();
+            using (var context = new ParkingLotAppDbContext())
+            {
+                //find the old entity
+                var oldParkingLot = GetById(updatedparkingLot.Id);
+
+                //update each entity properties / get; set;
+                context.Entry(oldParkingLot).CurrentValues.SetValues(updatedparkingLot);
+
+                //save changes
+                context.SaveChanges();
+
+                return oldParkingLot; //To ensure save happened
+            }
         }
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            using (var context = new ParkingLotAppDbContext())
+            {
+                //Find what we are going to delete
+                var parkinglotToBeDeleted = GetById(id);
+
+                //Delete
+                context.parkingLots.Remove(parkinglotToBeDeleted);
+
+                //Save changes
+                context.SaveChanges();
+
+                //check if entity/model exists
+                if(GetById(id) == null)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
         }
 
-        
-
-        
+       
     }
 }

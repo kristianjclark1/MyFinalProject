@@ -14,6 +14,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\ParkingLotaApp.Service\ParkingLotApp.Service.csproj" />
     <ProjectReference Include="..\ParkingLotApp.Data\ParkingLotApp.Data.csproj" />
     <ProjectReference Include="..\ParkingLotApp.Model\ParkingLotApp.Domain.csproj" />
   </ItemGroup>

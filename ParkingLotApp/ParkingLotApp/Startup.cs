@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ParkingLotApp.Data.Implementation.SqlServer;
+using ParkingLotApp.Data.Interfaces;
+using ParkingLotApp.Service.Services;
 
 namespace ParkingLotApp
 {
@@ -31,6 +34,10 @@ namespace ParkingLotApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //Match an interface with an implementation
+            //Wherever we have dependency in a constructor
+            services.AddSingleton<IParkingLotService, ParkingLotService>();
+            services.AddSingleton<IParkingLotRepository, SqlServerParkingLotRepository>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
