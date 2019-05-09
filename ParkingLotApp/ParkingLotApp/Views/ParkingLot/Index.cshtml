@@ -1,6 +1,14 @@
 ﻿@*Model definition*@
 @model List<ParkingLot>
 
+@if (ViewBag.Error !=null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.Error
+    </div>
+}
+
+
 <h1>List of parking lots</h1>
 
 <table class="table">
@@ -68,7 +76,7 @@
 </div>
 
 @section Scripts
-{
+    {
     <script>
         $('.js-open-modal').on('click', event => {
             const parkingLotId = $(event.target).data('parking-lot-id');

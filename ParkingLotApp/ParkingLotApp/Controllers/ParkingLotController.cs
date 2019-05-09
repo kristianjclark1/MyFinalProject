@@ -22,75 +22,70 @@ namespace ParkingLotApp.WebUI.Controllers
             var parkinglots = _parkinglotService.GetAllParkingLots();
             return View(parkinglots);
         }
-    
 
-//        //GET parkinglot/add
-//        public IActionResult Add()
-//        {
-//            return View("Form");
-//        }
 
-//        [HttpPost]
-//        public IActionResult Add(ParkingLot newParkingLot)
-//        {
-//            if (ModelState.IsValid) // all required fields are completed
-//            {
-//                //We should be able to add the new parking lot
-//                ParkingLots.Add(newParkingLot);
-//                return View(nameof(Index), ParkingLots);
-//            }
+        //GET parkinglot/add
+        public IActionResult Add()
+        {
+            return View("Form");
+        }
 
-//            return View("Form");
-//        }
+        [HttpPost]
+        public IActionResult Add(ParkingLot newParkingLot)
+        {
+            if (ModelState.IsValid) // all required fields are completed
+            {
+                //We should be able to add the new parking lot
+                _parkinglotService.Create(newParkingLot);
+                return RedirectToAction(nameof(Index)); // ->Index()
+            }
 
-//        public IActionResult Detail(int id)
-//        {
-//           var ParkingLot = ParkingLots.Single(p => p.Id == id);
+            return View("Form");
+        }
 
-//           return View(ParkingLot);
-//        }
+        public IActionResult Detail(int id)
+        {
+            var ParkingLot = _parkinglotService.GetById(id);
 
-//        public IActionResult Delete(int id)
-//        {
-//            var ParkingLot = ParkingLots.Single(p => p.Id == id);
+            return View(ParkingLot);
+        }
 
-//            ParkingLots.Remove(ParkingLot);
+        public IActionResult Delete(int id)
+        {
+            var succeeded = _parkinglotService.Delete(id);
 
-//            return View(nameof(Index), ParkingLots);
-//        }
+            if (!succeeded) //when delete fails
+                ViewBag.Error = "Sorry, the parking lot could not be deleted, please try again later";
 
-//        public IActionResult Edit(int id)
-//        {
-//            var ParkingLot = ParkingLots.Single(p => p.Id == id);
 
-//            return View("Form", ParkingLot);
-//        }
+            return RedirectToAction(nameof(Index));
+        }
 
-//        [HttpPost]
-//        public IActionResult Edit(int id, ParkingLot updatedParkingLot )
-//        {
-//            if (ModelState.IsValid)
-//            {
+        public IActionResult Edit(int id)
+        {
+            var ParkingLot = _parkinglotService.GetById(id);
 
-//                var oldParkingLot = ParkingLots.Single(p => p.Id == id);
+            return View("Form", ParkingLot); //Edit.cshtml, renamed to Form.cshtml
+        }
 
-//                oldParkingLot.Address = updatedParkingLot.Address;
-//                oldParkingLot.Location = updatedParkingLot.Location;
-//                oldParkingLot.Floor = updatedParkingLot.Floor;
-//                oldParkingLot.Spaces = updatedParkingLot.Spaces;
-//                oldParkingLot.Size = updatedParkingLot.Size;
-//                oldParkingLot.Handicap = updatedParkingLot.Handicap;
+        [HttpPost]
+        public IActionResult Edit(int id, ParkingLot updatedParkingLot)
+        {
+            if (ModelState.IsValid)
+            {
+                _parkinglotService.Update(updatedParkingLot);
 
-//                return View(nameof(Index), ParkingLots);
-//            }
+                return RedirectToAction(nameof(Index));
 
-//            return View("Form", updatedParkingLot); //By passing updatedParkingLot
-//                                                    //We trigger the logic
-//                                                    //for Edit within the Form.cshtml        
-//        }
+            }
 
-        
-            
+            return View("Form", updatedParkingLot); //By passing updatedParkingLot
+                                                    //We trigger the logic
+                                                    //for Edit within the Form.cshtml        
+        }
+
+
+
 
     }
 }
