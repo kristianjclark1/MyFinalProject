@@ -15,7 +15,8 @@ namespace ParkingLotApp.Data.Implementation.SqlServer
             using (var context = new ParkingLotAppDbContext())
             {
                 //SQL -> Database look for table parkingLots
-               var  parkinglot = context.parkingLots.Single(p => p.Id == id);
+                //if not found, returns null value -rather than exception
+               var  parkinglot = context.parkingLots.SingleOrDefault(p => p.Id == id);
                return parkinglot;
             }
         }
@@ -49,6 +50,7 @@ namespace ParkingLotApp.Data.Implementation.SqlServer
                 context.Entry(oldParkingLot).CurrentValues.SetValues(updatedparkingLot);
 
                 //save changes
+                context.parkingLots.Update(oldParkingLot);
                 context.SaveChanges();
 
                 return oldParkingLot; //To ensure save happened

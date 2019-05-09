@@ -34,12 +34,23 @@ namespace ParkingLotApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //Match an interface with an implementation
-            //Wherever we have dependency in a constructor
-            services.AddSingleton<IParkingLotService, ParkingLotService>();
-            services.AddSingleton<IParkingLotRepository, SqlServerParkingLotRepository>();
+            AddServiceImplementation(services);
+
+            AddRepositoryImplementation(services);
+
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+        }
+
+        private void AddRepositoryImplementation(IServiceCollection services)
+        {
+            services.AddSingleton<IParkingLotRepository, SqlServerParkingLotRepository>();
+        }
+
+        private void AddServiceImplementation(IServiceCollection services)
+        {
+            services.AddSingleton<IParkingLotService, ParkingLotService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
