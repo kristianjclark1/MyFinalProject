@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ParkingLotApp.Domain.Model;
 using ParkingLotApp.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace ParkingLotApp.Data.Context
        //Represents a collection (table) of a given entity/model
        //They map to table by default
         public DbSet<ParkingLot> parkingLots { get; set; }
+        public DbSet<ParkingLotType> ParkingLotTypes { get; set; }
 
         //Virtual method designed to be overridden
         //You can provide configuration info for the context
@@ -21,6 +23,18 @@ namespace ParkingLotApp.Data.Context
             //Connection string is divided in 3 elements
             //server - database - authentication
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=parkinglotapp;Trusted_Connection=true");
+        }
+
+        //We can manipulate the models
+        //Add data to tables
+        //change the default relationships
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ParkingLotType>().HasData(
+                new ParkingLotType {Id = 1, Description = "Parking Garage"},
+                new ParkingLotType {Id = 2, Description = "On Street"},
+                new ParkingLotType {Id = 3, Description = "Business"}
+                );
         }
          
     }
