@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkingLotApp.Data.Context;
 
 namespace ParkingLotApp.Data.Migrations
 {
     [DbContext(typeof(ParkingLotAppDbContext))]
-    partial class ParkingLotAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190513045939_add-parkinglot-to-parkinglot-type-relationship")]
+    partial class addparkinglottoparkinglottyperelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

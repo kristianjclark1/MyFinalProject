@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20190502033658_change-name.cs" />
+    <Compile Remove="Migrations\20190513045539_add-parkinglot-to-parkinglot-type-relationship.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,6 +15,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ParkingLotApp.Model\ParkingLotApp.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Diagram\" />
   </ItemGroup>
 
 </Project>

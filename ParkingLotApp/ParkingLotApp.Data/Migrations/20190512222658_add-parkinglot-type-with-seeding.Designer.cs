@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkingLotApp.Data.Context;
 
 namespace ParkingLotApp.Data.Migrations
 {
     [DbContext(typeof(ParkingLotAppDbContext))]
-    partial class ParkingLotAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190512222658_add-parkinglot-type-with-seeding")]
+    partial class addparkinglottypewithseeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,25 +70,13 @@ namespace ParkingLotApp.Data.Migrations
                     b.Property<string>("Location")
                         .IsRequired();
 
-                    b.Property<int>("ParkingLotTypeId");
-
                     b.Property<int>("Size");
 
                     b.Property<int>("Spaces");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParkingLotTypeId");
-
                     b.ToTable("parkingLots");
-                });
-
-            modelBuilder.Entity("ParkingLotApp.Domain.Models.ParkingLot", b =>
-                {
-                    b.HasOne("ParkingLotApp.Domain.Model.ParkingLotType", "ParkingLotType")
-                        .WithMany()
-                        .HasForeignKey("ParkingLotTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

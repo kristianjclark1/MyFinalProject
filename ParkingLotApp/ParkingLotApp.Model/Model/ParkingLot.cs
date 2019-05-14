@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ParkingLotApp.Domain.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -23,5 +24,13 @@ namespace ParkingLotApp.Domain.Models
         public int Size { get; set; }
         public bool Handicap { get; set; }
         public string Geomap { get; set; }
+
+        //Fully defined Relationship
+        public int ParkingLotTypeId { get; set; }
+        public ParkingLotType ParkingLotType { get; set; }
+
+        
+        
+
     }
 }
