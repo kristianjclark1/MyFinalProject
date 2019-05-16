@@ -1,6 +1,6 @@
 ﻿using ParkingLotApp.Data.Context;
 using ParkingLotApp.Data.Interfaces;
-using ParkingLotApp.Domain.Models;
+using ParkingLotApp.Domain.Model;
 using System;
 using System.Linq;
 using System.Collections.Generic;

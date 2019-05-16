@@ -9,6 +9,9 @@
 
     //Ternary operator
     var action = Model == null ? "Add" : "Edit";
+
+    var parkingLotTypes = ViewData["ParkingLotTypes"] as ICollection<ParkingLotType>; //ICollection<ParkingLotType>
+    IEnumerable<SelectListItem> plItems = new SelectList(parkingLotTypes, "Id", "Description");
 }
 
 @if (action == "Add")
@@ -54,6 +57,11 @@ else
     <div class="form-group form-check">
         <input type="checkbox" class="form-check-input" id="exampleCheck1">
         <label class="form-check-label" for="exampleCheck1">Handicap Parking</label>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ParkingLotTypeId"></label>
+        <select asp-for="ParkingLotTypeId" asp-items="@plItems"></select>
     </div>
 
     <button type="submit" class="btn btn-primary">@action</button>

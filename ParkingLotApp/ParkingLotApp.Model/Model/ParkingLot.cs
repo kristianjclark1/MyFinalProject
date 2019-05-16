@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace ParkingLotApp.Domain.Models
+namespace ParkingLotApp.Domain.Model
 {
     public class ParkingLot
     {

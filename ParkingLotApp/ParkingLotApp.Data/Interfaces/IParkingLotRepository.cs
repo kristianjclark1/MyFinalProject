@@ -1,4 +1,4 @@
-﻿using ParkingLotApp.Domain.Models;
+﻿using ParkingLotApp.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
