@@ -46,11 +46,13 @@ namespace ParkingLotApp
         private void AddRepositoryImplementation(IServiceCollection services)
         {
             services.AddSingleton<IParkingLotRepository, SqlServerParkingLotRepository>();
+            services.AddSingleton<IParkingLotTypeRepository, SqlServerParkingLotTypeRepository>();
         }
 
         private void AddServiceImplementation(IServiceCollection services)
         {
             services.AddSingleton<IParkingLotService, ParkingLotService>();
+            services.AddSingleton<IParkingLotTypeService, ParkingLotTypeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

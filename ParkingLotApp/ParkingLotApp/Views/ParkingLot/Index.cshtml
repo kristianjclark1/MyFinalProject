@@ -1,7 +1,7 @@
 ﻿@*Model definition*@
 @model List<ParkingLot>
 
-@if (ViewBag.Error !=null)
+@if (ViewData["Error"] !=null)
 {
     <div class="alert alert-danger" role="alert">
         @ViewBag.Error

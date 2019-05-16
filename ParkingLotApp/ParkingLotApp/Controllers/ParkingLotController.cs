@@ -2,32 +2,48 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ParkingLotApp.Domain.Model;
 using Microsoft.AspNetCore.Mvc;
-using ParkingLotApp.Domain.Models;
 using ParkingLotApp.Service.Services;
 
 namespace ParkingLotApp.WebUI.Controllers
 {
     public class ParkingLotController : Controller
     {
+        private const string PARKINGLOTTYPE = "ParkingLotTypes";
         private readonly IParkingLotService _parkinglotService;
+        private readonly IParkingLotTypeService _parkingLotTypeService;
 
-        public ParkingLotController(IParkingLotService parkingLotService)
+        public ParkingLotController(IParkingLotService parkingLotService, IParkingLotTypeService parkingLotTypeService)
         {
             _parkinglotService = parkingLotService;
+            _parkingLotTypeService = parkingLotTypeService;
         }
         //parkinglot/index
         public IActionResult Index()
         {
+            // check if got any error in TempData
+            if (TempData["Error"] != null)
+            {
+
+                // Pass the error to the ViewData, bc 
+                // we are communicating between action and view
+                ViewData.Add("Error", TempData["Error"]);
+            }
+
             var parkinglots = _parkinglotService.GetAllParkingLots();
             return View(parkinglots);
         }
 
 
         //GET parkinglot/add
+        [HttpGet]
         public IActionResult Add()
         {
-            return View("Form");
+            var parkingLotTypes = _parkingLotTypeService.GetAll();
+            ViewData.Add(PARKINGLOTTYPE, parkingLotTypes);
+
+            return View("Form"); 
         }
 
         [HttpPost]
@@ -55,7 +71,9 @@ namespace ParkingLotApp.WebUI.Controllers
             var succeeded = _parkinglotService.Delete(id);
 
             if (!succeeded) //when delete fails
-                ViewBag.Error = "Sorry, the parking lot could not be deleted, please try again later";
+                //using tempdata -bc we are communicating
+                //between actions - from Delete to Index
+                TempData.Add("Error", "Sorry, the parking lot could not be deleted, please try again later");
 
 
             return RedirectToAction(nameof(Index));
