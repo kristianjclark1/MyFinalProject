@@ -26,6 +26,7 @@ namespace ParkingLotApp.Domain.Model
         public string Geomap { get; set; }
 
         //Fully defined Relationship
+        [Display(Name = "Parking Lot Type")]
         public int ParkingLotTypeId { get; set; }
         public ParkingLotType ParkingLotType { get; set; }
 
