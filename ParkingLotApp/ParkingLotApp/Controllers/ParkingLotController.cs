@@ -40,9 +40,7 @@ namespace ParkingLotApp.WebUI.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            var parkingLotTypes = _parkingLotTypeService.GetAll();
-            ViewData.Add(PARKINGLOTTYPE, parkingLotTypes);
-
+            GetParkingLotTypes();
             return View("Form"); 
         }
 
@@ -56,6 +54,7 @@ namespace ParkingLotApp.WebUI.Controllers
                 return RedirectToAction(nameof(Index)); // ->Index()
             }
 
+            GetParkingLotTypes();
             return View("Form");
         }
 
@@ -102,7 +101,11 @@ namespace ParkingLotApp.WebUI.Controllers
                                                     //for Edit within the Form.cshtml        
         }
 
-
+        private void GetParkingLotTypes()
+        {
+            var parkingLotTypes = _parkingLotTypeService.GetAll();
+            ViewData.Add(PARKINGLOTTYPE, parkingLotTypes);
+        }
 
 
     }
