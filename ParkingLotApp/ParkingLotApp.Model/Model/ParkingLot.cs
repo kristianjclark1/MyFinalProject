@@ -30,7 +30,10 @@ namespace ParkingLotApp.Domain.Model
         public int ParkingLotTypeId { get; set; }
         public ParkingLotType ParkingLotType { get; set; }
 
-        
+        //Fully defined Relationship for App User
+        public string AppUserId { get; set; }
+        public AppUser Driver { get; set; }
+
         
 
     }

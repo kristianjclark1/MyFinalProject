@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingLotApp.Domain", "Par
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingLotApp.Data", "ParkingLotApp.Data\ParkingLotApp.Data.csproj", "{536D129C-23D1-474C-BF05-C1AE6E320003}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkingLotApp.Service", "ParkingLotaApp.Service\ParkingLotApp.Service.csproj", "{0DC20CAB-6C8A-4715-8F14-87F5D5267D83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParkingLotApp.Service", "ParkingLotaApp.Service\ParkingLotApp.Service.csproj", "{0DC20CAB-6C8A-4715-8F14-87F5D5267D83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

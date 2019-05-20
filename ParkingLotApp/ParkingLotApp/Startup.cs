@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ParkingLotApp.Data.Context;
 using ParkingLotApp.Data.Implementation.SqlServer;
 using ParkingLotApp.Data.Interfaces;
+using ParkingLotApp.Domain.Model;
 using ParkingLotApp.Service.Services;
 
 namespace ParkingLotApp
@@ -33,6 +36,12 @@ namespace ParkingLotApp
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            // Add DbContext as a service
+            services.AddDbContext<ParkingLotAppDbContext>();
+
+            //Add identity as a service
+            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<ParkingLotAppDbContext>();
 
             AddServiceImplementation(services);
 

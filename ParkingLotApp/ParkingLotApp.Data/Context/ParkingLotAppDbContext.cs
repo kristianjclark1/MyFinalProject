@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ParkingLotApp.Domain.Model;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace ParkingLotApp.Data.Context
 {
     //DbContext -> represent a session to a db and provides APIs
     //to communicate with db
-    public class ParkingLotAppDbContext : DbContext
+    public class ParkingLotAppDbContext : IdentityDbContext<AppUser>
     {
        //Represents a collection (table) of a given entity/model
        //They map to table by default
@@ -29,6 +30,9 @@ namespace ParkingLotApp.Data.Context
         //change the default relationships
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //base = IdentityDbContext
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<ParkingLotType>().HasData(
                 new ParkingLotType {Id = 1, Description = "Parking Garage"},
                 new ParkingLotType {Id = 2, Description = "On Street"},
