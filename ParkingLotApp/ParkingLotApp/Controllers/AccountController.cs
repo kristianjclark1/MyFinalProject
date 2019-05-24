@@ -54,7 +54,7 @@ namespace ParkingLotApp.WebUI.Controllers
                     //we can login the user
                     await _signInManager.SignInAsync(newUser, false);
                     //send user to the right page (redirect)
-                    return RedirectToAction("Index","HomeController"); //home/index
+                    return RedirectToAction("Index","Home"); //home/index
 
                 }
                 else
