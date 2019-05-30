@@ -29,6 +29,7 @@ namespace ParkingLotApp.WebUI.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            RedirectUserWhenAlreadyLoggedIn();
             return View();
         }
 
@@ -67,6 +68,52 @@ namespace ParkingLotApp.WebUI.Controllers
             }
             // sending back the error to the view (register form)
             return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(vm.Email, vm.RememberMe, false);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Email or Password incorrect");
+                }
+                return View(vm);
+            }
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        private IActionResult RedirectUserWhenAlreadyLoggedIn()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return null;
         }
     }
 }
