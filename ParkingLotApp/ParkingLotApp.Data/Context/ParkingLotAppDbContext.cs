@@ -15,6 +15,7 @@ namespace ParkingLotApp.Data.Context
        //They map to table by default
         public DbSet<ParkingLot> parkingLots { get; set; }
         public DbSet<ParkingLotType> ParkingLotTypes { get; set; }
+        public DbSet<ReserveParkingSpace>ReserveParkingSpaces { get; set; }
 
         //Virtual method designed to be overridden
         //You can provide configuration info for the context
@@ -38,6 +39,22 @@ namespace ParkingLotApp.Data.Context
                 new ParkingLotType {Id = 2, Description = "On Street"},
                 new ParkingLotType {Id = 3, Description = "Business"}
                 );
+
+            //Adding Reserve as the table in between parking lot type and AppUser
+            modelBuilder.Entity<ReserveParkingSpace>()
+                .HasKey(r => new { r.ParkingSpaceId, r.AppUserId });// Combined PK
+
+            modelBuilder.Entity<ReserveParkingSpace>()
+                .HasOne(r => r.Driver)
+                .WithMany(d => d.Reservations) 
+                .HasForeignKey(r => r.AppUserId);
+
+            modelBuilder.Entity<ReserveParkingSpace>()
+                .HasOne(r => r.ParkingLot)
+                .WithMany(p => p.Reservations)
+                .HasForeignKey(r => r.ParkingSpaceId);
+
+           
         }
          
     }
