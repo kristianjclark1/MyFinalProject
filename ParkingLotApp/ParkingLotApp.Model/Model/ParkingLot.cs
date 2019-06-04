@@ -34,7 +34,9 @@ namespace ParkingLotApp.Domain.Model
         public string AppUserId { get; set; }
         public AppUser Driver { get; set; }
 
-        
+        public ICollection<ReserveParkingSpace> Reservations { get; set; }
+
+
 
     }
 }

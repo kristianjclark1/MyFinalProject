@@ -10,5 +10,7 @@ namespace ParkingLotApp.Domain.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool Handicap { get; set; }
+
+        public ICollection<ReserveParkingSpace>Reservations { get; set; }
     }
 }
