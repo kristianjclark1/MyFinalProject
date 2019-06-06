@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkingLotApp.Data.Context;
 
 namespace ParkingLotApp.Data.Migrations
 {
     [DbContext(typeof(ParkingLotAppDbContext))]
-    partial class ParkingLotAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190604044004_added-user-roles")]
+    partial class addeduserroles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,15 +47,15 @@ namespace ParkingLotApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "dff3f7d6-a5af-4fe7-9392-453be05fa9a5",
-                            ConcurrencyStamp = "e28b8298-4b9d-4d20-bfeb-848de5cbdb72",
+                            Id = "5006367a-2fc2-42d5-9d1e-a3d2874547ba",
+                            ConcurrencyStamp = "aa969528-afc9-406e-a70c-ce07d71fec49",
                             Name = "Driver",
                             NormalizedName = "DRIVER"
                         },
                         new
                         {
-                            Id = "05b529dc-b77a-496a-9831-23ede57d772a",
-                            ConcurrencyStamp = "69a32fb1-3da5-49e0-bd9e-b66a6fe99358",
+                            Id = "f914d34b-3798-4322-89bf-fab84e57c0db",
+                            ConcurrencyStamp = "826d9ac2-042f-487d-a50e-53d316852a12",
                             Name = "ParkingSpace",
                             NormalizedName = "PARKINGSPACE"
                         });
@@ -211,6 +213,8 @@ namespace ParkingLotApp.Data.Migrations
                     b.Property<string>("Address")
                         .IsRequired();
 
+                    b.Property<string>("AppUserId");
+
                     b.Property<string>("Floor")
                         .IsRequired();
 
@@ -228,6 +232,8 @@ namespace ParkingLotApp.Data.Migrations
                     b.Property<int>("Spaces");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("ParkingLotTypeId");
 
@@ -331,6 +337,10 @@ namespace ParkingLotApp.Data.Migrations
 
             modelBuilder.Entity("ParkingLotApp.Domain.Model.ParkingLot", b =>
                 {
+                    b.HasOne("ParkingLotApp.Domain.Model.AppUser", "Driver")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("ParkingLotApp.Domain.Model.ParkingLotType", "ParkingLotType")
                         .WithMany()
                         .HasForeignKey("ParkingLotTypeId")
