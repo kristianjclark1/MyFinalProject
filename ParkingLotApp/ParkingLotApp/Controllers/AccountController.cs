@@ -14,20 +14,29 @@ namespace ParkingLotApp.WebUI.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public AccountController(UserManager<AppUser> userManager,
-            SignInManager<AppUser>signInManager)
+            SignInManager<AppUser>signInManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         [HttpGet]
         public IActionResult Register()
         {
-            
             RedirectUserWhenAlreadyLoggedIn();
-            return View();
+
+            var roles= _roleManager.Roles.ToList();
+
+            var vm = new RegisterViewModel
+            {
+                Roles = roles
+            };
+            return View(vm);
         }
 
         [HttpPost]
@@ -44,15 +53,27 @@ namespace ParkingLotApp.WebUI.Controllers
                     NormalizedEmail = vm.Email.ToUpper()
                 };
 
-                 var result = await _userManager.CreateAsync(newUser, vm.Password);
+                var result = await _userManager.CreateAsync(newUser, vm.Password);
 
-                if (result.Succeeded)
+                if (result.Succeeded) // new user got created
                 {
-                    // new user got created
-                    //we can login the user
-                    await _signInManager.SignInAsync(newUser, false);
-                    //send user to the right page (redirect)
-                    return RedirectToAction("Index","Home"); //home/index
+                    // assign the selected role to newly created user
+                    result = await _userManager.AddToRoleAsync(newUser, vm.Role);
+                    
+                    if(result.Succeeded) //new user assigned to role
+                    {
+                        // we can login the user
+                        await _signInManager.SignInAsync(newUser, false);
+
+                        // redirect
+                        if(vm.Role == "Driver")
+                        {
+                            return RedirectToAction("Index", "Driver");
+                        }
+
+                        return RedirectToAction("Index", "ParkingSpace");
+                    }
+                    
 
                 }
                 else

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ParkingLotApp.Domain.Model;
 using System;
@@ -54,7 +55,10 @@ namespace ParkingLotApp.Data.Context
                 .WithMany(p => p.Reservations)
                 .HasForeignKey(r => r.ParkingSpaceId);
 
-           
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole { Name= "Driver", NormalizedName= "DRIVER"},
+                new IdentityRole { Name = "ParkingSpace", NormalizedName = "PARKINGSPACE" }
+                );
         }
          
     }
