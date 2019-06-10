@@ -5,19 +5,26 @@ using System.Threading.Tasks;
 using ParkingLotApp.Domain.Model;
 using Microsoft.AspNetCore.Mvc;
 using ParkingLotApp.Service.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace ParkingLotApp.WebUI.Controllers
 {
+    [Authorize(Roles = "Driver")]
     public class ParkingLotController : Controller
     {
         private const string PARKINGLOTTYPE = "ParkingLotTypes";
         private readonly IParkingLotService _parkinglotService;
         private readonly IParkingLotTypeService _parkingLotTypeService;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ParkingLotController(IParkingLotService parkingLotService, IParkingLotTypeService parkingLotTypeService)
+        public ParkingLotController(IParkingLotService parkingLotService, 
+            IParkingLotTypeService parkingLotTypeService,
+            UserManager<AppUser> userManager)
         {
             _parkinglotService = parkingLotService;
             _parkingLotTypeService = parkingLotTypeService;
+            _userManager = userManager;
         }
         //parkinglot/index
         public IActionResult Index()
@@ -44,11 +51,14 @@ namespace ParkingLotApp.WebUI.Controllers
             return View("Form"); 
         }
 
+        
         [HttpPost]
         public IActionResult Add(ParkingLot newParkingLot)
         {
             if (ModelState.IsValid) // all required fields are completed
             {
+                //assign user to the parking lot
+                newParkingLot.ParkingLotTypeId = _userManager.GetUserId();
                 //We should be able to add the new parking lot
                 _parkinglotService.Create(newParkingLot);
                 return RedirectToAction(nameof(Index)); // ->Index()
@@ -58,6 +68,7 @@ namespace ParkingLotApp.WebUI.Controllers
             return View("Form");
         }
 
+        [Authorize(Roles ="Driver")]
         public IActionResult Detail(int id)
         {
             var ParkingLot = _parkinglotService.GetById(id);
