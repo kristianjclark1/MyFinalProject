@@ -57,9 +57,7 @@ namespace ParkingLotApp.WebUI.Controllers
         {
             if (ModelState.IsValid) // all required fields are completed
             {
-                //assign user to the parking lot
-                newParkingLot.ParkingLotTypeId = _userManager.GetUserId();
-                //We should be able to add the new parking lot
+               //We should be able to add the new parking lot
                 _parkinglotService.Create(newParkingLot);
                 return RedirectToAction(nameof(Index)); // ->Index()
             }

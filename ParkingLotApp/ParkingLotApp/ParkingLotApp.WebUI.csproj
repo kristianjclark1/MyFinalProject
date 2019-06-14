@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>4179089f-5ac1-4fd7-8c0e-3763b3e0ff40</UserSecretsId>
   </PropertyGroup>
 
 
@@ -17,6 +18,13 @@
     <ProjectReference Include="..\ParkingLotaApp.Service\ParkingLotApp.Service.csproj" />
     <ProjectReference Include="..\ParkingLotApp.Data\ParkingLotApp.Data.csproj" />
     <ProjectReference Include="..\ParkingLotApp.Model\ParkingLotApp.Domain.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Update="app-parkingLotApp.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

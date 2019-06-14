@@ -24,7 +24,8 @@ namespace ParkingLotApp.Data.Context
         {
             //Connection string is divided in 3 elements
             //server - database - authentication
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=parkinglotapp;Trusted_Connection=true");
+            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=parkinglotapp;Trusted_Connection=true");
+            optionsBuilder.UseSqlite("Data Source=app-parkingLotApp.db");
         }
 
         //We can manipulate the models
