@@ -21,7 +21,7 @@ namespace ParkingLotApp.Domain.Model
 
         public int Spaces { get; set; }
         [Display(Name ="Lot Size")]
-        public int Size { get; set; }
+        public Double Size { get; set; }
         public bool Handicap { get; set; }
         public string Geomap { get; set; }
 
