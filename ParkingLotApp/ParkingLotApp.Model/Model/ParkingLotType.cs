@@ -11,5 +11,7 @@ namespace ParkingLotApp.Domain.Model
 
         [Required] //Make sure that entry contains a description
         public string Description { get; set; }
+
+        
     }
 }

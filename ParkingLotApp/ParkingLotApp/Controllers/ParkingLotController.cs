@@ -91,6 +91,7 @@ namespace ParkingLotApp.WebUI.Controllers
         {
             var ParkingLot = _parkinglotService.GetById(id);
 
+            GetParkingLotTypes();
             return View("Form", ParkingLot); //Edit.cshtml, renamed to Form.cshtml
         }
 
