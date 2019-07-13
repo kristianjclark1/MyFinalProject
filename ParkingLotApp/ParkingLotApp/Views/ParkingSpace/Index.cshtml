@@ -6,3 +6,28 @@
 
 <h1>Reserve a parking space</h1>
 
+<table class="table">
+    <tr>
+        <th>Parking Lot Location</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Fare</th>
+    </tr>
+
+    @foreach (var reserveParkingSpace in Model)
+    {
+        <tr>
+            <td>@reserveParkingSpace.ParkingLot</td>
+            <td>@reserveParkingSpace.StartDate</td>
+            <td>@reserveParkingSpace.EndDate</td>
+            <td>@reserveParkingSpace.Fare</td>
+            
+            <td>
+                <a asp-controller="ParkingLot" asp-action="detail" asp-route-id="@reserveParkingSpace.Id">Detail</a> |
+                <a asp-controller="ParkingLot" asp-action="edit" asp-route-id="@reserveParkingSpace.Id">Edit</a> |
+                <a href="#" class="js-open-modal" data-parking-lot-id="@reserveParkingSpace.Id">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
+
