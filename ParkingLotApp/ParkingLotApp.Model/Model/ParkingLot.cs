@@ -32,6 +32,7 @@ namespace ParkingLotApp.Domain.Model
 
 
         public ICollection<ReserveParkingSpace> Reservations { get; set; }
+        public ICollection<ParkingSpace>  ParkingSpaces { get; set; }
 
 
 
