@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ParkingLotApp.Domain.Model;
+using ParkingLotApp.WebUI.ViewModels;
 
 namespace ParkingLotApp.WebUI.Controllers
 {
@@ -18,6 +19,7 @@ namespace ParkingLotApp.WebUI.Controllers
         [HttpGet]
         public IActionResult Add()
         {
+            AddParkingSpaceViewModel addParkingSpaceViewModel = new AddParkingSpaceViewModel();
             return View();
         }
 
