@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ParkingLotApp.Domain.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,8 +10,10 @@ namespace ParkingLotApp.WebUI.ViewModels
     {
         public int ParkingSpaceId { get; set; }
 
-        public string _parkingLot { get; set; }
+        public ParkingLot parkingLot { get; set; }
 
-        public bool Reserved { get; set; }
+        public ParkingSpace parkingSpace { get; set; }
+
+        
     }
 }

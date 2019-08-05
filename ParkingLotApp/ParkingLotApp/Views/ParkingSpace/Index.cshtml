@@ -14,9 +14,15 @@
         <th>Fare</th>
     </tr>
 
-    @foreach (var _parkingSpace in Model )
+    @foreach (var _parkingSpace in Model)
     {
-        
+        <tr>
+            <td>@_parkingSpace.AppUserId</td>
+            <td>@_parkingSpace.Driver</td>
+            <td>@_parkingSpace.ParkingSpaceId</td>
+            <td>@_parkingSpace.ParkingLot</td>
+            <td>@_parkingSpace.Reserved</td>
+        </tr>
     }
 
 </table>foreach

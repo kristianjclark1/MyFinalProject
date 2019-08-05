@@ -1,19 +1,32 @@
-﻿@model ParkingLot
+﻿@model ParkingLotApp.WebUI.ViewModels.AddParkingSpaceViewModel
 
-<h1>@Model.Address</h1>
+<h1>@Model.parkingLot.Address</h1>
 <div>
-    <p>@Model.Location</p>
-    <p>@Model.Floor</p>
-    <p>@Model.Spaces</p>
+    <p>@Model.parkingLot.Location</p>
+    <p>@Model.parkingLot.Floor</p>
+    <p>@Model.parkingLot.Spaces</p>
 </div>
 
-<table>
-    
-    @foreach (var ParkingSpace in Model.ParkingSpaces)
+<table class="table">
+    <tr>
+        <th>Start</th>
+        <th>Finish</th>
+        <th>Rate</th>
+        <th>Location</th>
+    </tr>
+
+    @foreach (var parkingSpace in Model)
     {
         <tr>
+            <td>@parkingSpace.AppUserId</td>
+            <td>@parkingSpace.Driver</td>
+            <td>@parkingSpace.ParkingSpaceId</td>
+            <td>@parkingSpace.ParkingLot</td>
+            <td>@parkingSpace.Reserved</td>
+            <td>
+                <a asp-controller="ParkingSpace" asp-action="spaces" asp-route-id="@parkingSpace.ParkingSpaceId">Spaces</a>
+            </td>
         </tr>
-
     }
 </table>
 

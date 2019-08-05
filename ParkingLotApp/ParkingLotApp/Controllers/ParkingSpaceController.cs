@@ -28,5 +28,16 @@ namespace ParkingLotApp.WebUI.Controllers
         {
             return View();
         }
+
+        public IActionResult Edit(int ParkingSpaceId)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int ParkingSpaceId, ParkingSpace updatedParkingSpace)
+        {
+            return View();
+        }
     }
 }

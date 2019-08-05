@@ -67,7 +67,7 @@ namespace ParkingLotApp.WebUI.Controllers
         }
 
         [Authorize(Roles ="Driver")]
-        public IActionResult Detail(int id)
+        public IActionResult Detail(int id)  //get id from URL
         {
             var ParkingLot = _parkinglotService.GetById(id);
 
