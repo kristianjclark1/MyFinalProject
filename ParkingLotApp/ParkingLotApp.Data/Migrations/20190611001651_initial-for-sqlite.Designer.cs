@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkingLotApp.Data.Context;
@@ -10,16 +9,14 @@ using ParkingLotApp.Data.Context;
 namespace ParkingLotApp.Data.Migrations
 {
     [DbContext(typeof(ParkingLotAppDbContext))]
-    [Migration("20190520042132_identity-provider")]
-    partial class identityprovider
+    [Migration("20190611001651_initial-for-sqlite")]
+    partial class initialforsqlite
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -39,17 +36,31 @@ namespace ParkingLotApp.Data.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "031eec68-9291-4a1a-80de-77f9db3fdfa1",
+                            ConcurrencyStamp = "f30bb96d-37bc-4e77-b948-1c9ed4b924ed",
+                            Name = "Driver",
+                            NormalizedName = "DRIVER"
+                        },
+                        new
+                        {
+                            Id = "b9402d1d-24c6-4ea1-a2b9-74a503ff535d",
+                            ConcurrencyStamp = "b28aaca0-f949-4e16-9f4f-f960e16b68ad",
+                            Name = "ParkingSpace",
+                            NormalizedName = "PARKINGSPACE"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -68,8 +79,7 @@ namespace ParkingLotApp.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -182,8 +192,7 @@ namespace ParkingLotApp.Data.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -191,13 +200,10 @@ namespace ParkingLotApp.Data.Migrations
             modelBuilder.Entity("ParkingLotApp.Domain.Model.ParkingLot", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address")
                         .IsRequired();
-
-                    b.Property<string>("AppUserId");
 
                     b.Property<string>("Floor")
                         .IsRequired();
@@ -217,8 +223,6 @@ namespace ParkingLotApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
-
                     b.HasIndex("ParkingLotTypeId");
 
                     b.ToTable("parkingLots");
@@ -227,8 +231,7 @@ namespace ParkingLotApp.Data.Migrations
             modelBuilder.Entity("ParkingLotApp.Domain.Model.ParkingLotType", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description")
                         .IsRequired();
@@ -253,6 +256,25 @@ namespace ParkingLotApp.Data.Migrations
                             Id = 3,
                             Description = "Business"
                         });
+                });
+
+            modelBuilder.Entity("ParkingLotApp.Domain.Model.ReserveParkingSpace", b =>
+                {
+                    b.Property<int>("ParkingSpaceId");
+
+                    b.Property<string>("AppUserId");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<double>("Fare");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.HasKey("ParkingSpaceId", "AppUserId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("ReserveParkingSpaces");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -302,13 +324,22 @@ namespace ParkingLotApp.Data.Migrations
 
             modelBuilder.Entity("ParkingLotApp.Domain.Model.ParkingLot", b =>
                 {
-                    b.HasOne("ParkingLotApp.Domain.Model.AppUser", "Driver")
-                        .WithMany()
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("ParkingLotApp.Domain.Model.ParkingLotType", "ParkingLotType")
                         .WithMany()
                         .HasForeignKey("ParkingLotTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ParkingLotApp.Domain.Model.ReserveParkingSpace", b =>
+                {
+                    b.HasOne("ParkingLotApp.Domain.Model.AppUser", "Driver")
+                        .WithMany("Reservations")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ParkingLotApp.Domain.Model.ParkingLot", "ParkingLot")
+                        .WithMany("Reservations")
+                        .HasForeignKey("ParkingSpaceId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

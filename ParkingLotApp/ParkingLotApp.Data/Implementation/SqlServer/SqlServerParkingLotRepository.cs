@@ -81,6 +81,15 @@ namespace ParkingLotApp.Data.Implementation.SqlServer
 
         }
 
+        public bool IsAvailable( ParkingSpace _parkingSpace)
+        {
+            if (_parkingSpace.Reserved)
+            {
+                return false;
+            }
+            return true;
+        }
+
        
     }
 }

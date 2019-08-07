@@ -1,18 +1,12 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ParkingLotApp.Data.Migrations
 {
-    public partial class identityprovider : Migration
+    public partial class initialforsqlite : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "AppUserId",
-                table: "parkingLots",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -56,11 +50,24 @@ namespace ParkingLotApp.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ParkingLotTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Description = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ParkingLotTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -81,7 +88,7 @@ namespace ParkingLotApp.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -161,10 +168,83 @@ namespace ParkingLotApp.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_parkingLots_AppUserId",
-                table: "parkingLots",
-                column: "AppUserId");
+            migrationBuilder.CreateTable(
+                name: "parkingLots",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Address = table.Column<string>(nullable: false),
+                    Location = table.Column<string>(nullable: false),
+                    Floor = table.Column<string>(nullable: false),
+                    Spaces = table.Column<int>(nullable: false),
+                    Size = table.Column<int>(nullable: false),
+                    Handicap = table.Column<bool>(nullable: false),
+                    Geomap = table.Column<string>(nullable: true),
+                    ParkingLotTypeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_parkingLots", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_parkingLots_ParkingLotTypes_ParkingLotTypeId",
+                        column: x => x.ParkingLotTypeId,
+                        principalTable: "ParkingLotTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReserveParkingSpaces",
+                columns: table => new
+                {
+                    AppUserId = table.Column<string>(nullable: false),
+                    ParkingSpaceId = table.Column<int>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    Fare = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReserveParkingSpaces", x => new { x.ParkingSpaceId, x.AppUserId });
+                    table.ForeignKey(
+                        name: "FK_ReserveParkingSpaces_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReserveParkingSpaces_parkingLots_ParkingSpaceId",
+                        column: x => x.ParkingSpaceId,
+                        principalTable: "parkingLots",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "031eec68-9291-4a1a-80de-77f9db3fdfa1", "f30bb96d-37bc-4e77-b948-1c9ed4b924ed", "Driver", "DRIVER" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "b9402d1d-24c6-4ea1-a2b9-74a503ff535d", "b28aaca0-f949-4e16-9f4f-f960e16b68ad", "ParkingSpace", "PARKINGSPACE" });
+
+            migrationBuilder.InsertData(
+                table: "ParkingLotTypes",
+                columns: new[] { "Id", "Description" },
+                values: new object[] { 1, "Parking Garage" });
+
+            migrationBuilder.InsertData(
+                table: "ParkingLotTypes",
+                columns: new[] { "Id", "Description" },
+                values: new object[] { 2, "On Street" });
+
+            migrationBuilder.InsertData(
+                table: "ParkingLotTypes",
+                columns: new[] { "Id", "Description" },
+                values: new object[] { 3, "Business" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -175,8 +255,7 @@ namespace ParkingLotApp.Data.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -202,24 +281,21 @@ namespace ParkingLotApp.Data.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_parkingLots_AspNetUsers_AppUserId",
+            migrationBuilder.CreateIndex(
+                name: "IX_parkingLots_ParkingLotTypeId",
                 table: "parkingLots",
-                column: "AppUserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                column: "ParkingLotTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReserveParkingSpaces_AppUserId",
+                table: "ReserveParkingSpaces",
+                column: "AppUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_parkingLots_AspNetUsers_AppUserId",
-                table: "parkingLots");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -236,18 +312,19 @@ namespace ParkingLotApp.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ReserveParkingSpaces");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.DropIndex(
-                name: "IX_parkingLots_AppUserId",
-                table: "parkingLots");
+            migrationBuilder.DropTable(
+                name: "parkingLots");
 
-            migrationBuilder.DropColumn(
-                name: "AppUserId",
-                table: "parkingLots");
+            migrationBuilder.DropTable(
+                name: "ParkingLotTypes");
         }
     }
 }

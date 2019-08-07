@@ -85,6 +85,11 @@ namespace ParkingLotApp.WebUI.Controllers
                 }
             }
             // sending back the error to the view (register form)
+
+            // repopulate the Roles to generate the dropdown
+            var roles = _roleManager.Roles.ToList();
+            vm.Roles = roles;
+
             return View(vm);
         }
 

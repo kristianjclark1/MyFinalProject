@@ -11,5 +11,7 @@ namespace ParkingLotApp.Domain.Model
 
         public int ParkingSpaceId { get; set; }
         public ParkingLot ParkingLot { get; set; }
+
+        public bool Reserved { get; set; }
     }
 }

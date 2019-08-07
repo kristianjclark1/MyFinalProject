@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkingLotApp.Data.Context;
 
@@ -15,9 +14,7 @@ namespace ParkingLotApp.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -37,23 +34,22 @@ namespace ParkingLotApp.Data.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
                         new
                         {
-                            Id = "dff3f7d6-a5af-4fe7-9392-453be05fa9a5",
-                            ConcurrencyStamp = "e28b8298-4b9d-4d20-bfeb-848de5cbdb72",
+                            Id = "031eec68-9291-4a1a-80de-77f9db3fdfa1",
+                            ConcurrencyStamp = "f30bb96d-37bc-4e77-b948-1c9ed4b924ed",
                             Name = "Driver",
                             NormalizedName = "DRIVER"
                         },
                         new
                         {
-                            Id = "05b529dc-b77a-496a-9831-23ede57d772a",
-                            ConcurrencyStamp = "69a32fb1-3da5-49e0-bd9e-b66a6fe99358",
+                            Id = "b9402d1d-24c6-4ea1-a2b9-74a503ff535d",
+                            ConcurrencyStamp = "b28aaca0-f949-4e16-9f4f-f960e16b68ad",
                             Name = "ParkingSpace",
                             NormalizedName = "PARKINGSPACE"
                         });
@@ -62,8 +58,7 @@ namespace ParkingLotApp.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -82,8 +77,7 @@ namespace ParkingLotApp.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -196,8 +190,7 @@ namespace ParkingLotApp.Data.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -205,8 +198,7 @@ namespace ParkingLotApp.Data.Migrations
             modelBuilder.Entity("ParkingLotApp.Domain.Model.ParkingLot", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address")
                         .IsRequired();
@@ -237,8 +229,7 @@ namespace ParkingLotApp.Data.Migrations
             modelBuilder.Entity("ParkingLotApp.Domain.Model.ParkingLotType", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description")
                         .IsRequired();

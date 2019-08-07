@@ -1,7 +1,29 @@
-﻿
+﻿@model List<ParkingSpace>
+
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index for parking space</h1>
+<h1>Reserve a parking space</h1>
+
+<table class="table">
+    <tr>
+        <th>Parking Lot Location</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Fare</th>
+    </tr>
+
+    @foreach (var _parkingSpace in Model)
+    {
+        <tr>
+            <td>@_parkingSpace.AppUserId</td>
+            <td>@_parkingSpace.Driver</td>
+            <td>@_parkingSpace.ParkingSpaceId</td>
+            <td>@_parkingSpace.ParkingLot</td>
+            <td>@_parkingSpace.Reserved</td>
+        </tr>
+    }
+
+</table>
 

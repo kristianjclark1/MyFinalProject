@@ -5,19 +5,28 @@ using System.Threading.Tasks;
 using ParkingLotApp.Domain.Model;
 using Microsoft.AspNetCore.Mvc;
 using ParkingLotApp.Service.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using ParkingLotApp.WebUI.ViewModels;
 
 namespace ParkingLotApp.WebUI.Controllers
 {
+    [Authorize(Roles = "Driver")]
     public class ParkingLotController : Controller
     {
         private const string PARKINGLOTTYPE = "ParkingLotTypes";
         private readonly IParkingLotService _parkinglotService;
         private readonly IParkingLotTypeService _parkingLotTypeService;
+        private readonly IParkingSpaceService _parkingSpaceService;
+        private readonly UserManager<AppUser> _userManager;
 
-        public ParkingLotController(IParkingLotService parkingLotService, IParkingLotTypeService parkingLotTypeService)
+        public ParkingLotController(IParkingLotService parkingLotService, 
+            IParkingLotTypeService parkingLotTypeService,
+            UserManager<AppUser> userManager)
         {
             _parkinglotService = parkingLotService;
             _parkingLotTypeService = parkingLotTypeService;
+            _userManager = userManager;
         }
         //parkinglot/index
         public IActionResult Index()
@@ -44,12 +53,13 @@ namespace ParkingLotApp.WebUI.Controllers
             return View("Form"); 
         }
 
+        
         [HttpPost]
         public IActionResult Add(ParkingLot newParkingLot)
         {
             if (ModelState.IsValid) // all required fields are completed
             {
-                //We should be able to add the new parking lot
+               //We should be able to add the new parking lot
                 _parkinglotService.Create(newParkingLot);
                 return RedirectToAction(nameof(Index)); // ->Index()
             }
@@ -58,11 +68,15 @@ namespace ParkingLotApp.WebUI.Controllers
             return View("Form");
         }
 
-        public IActionResult Detail(int id)
+        [Authorize(Roles = "Driver")]
+        public IActionResult Detail(int id)  //get id from URL
         {
-            var ParkingLot = _parkinglotService.GetById(id);
+            AddParkingSpaceViewModel vm = new AddParkingSpaceViewModel();
 
-            return View(ParkingLot);
+                vm.parkingLot = _parkinglotService.GetById(id);
+              //  vm.parkingSpace = _parkingSpaceService.GetById(spaceId);
+        
+            return View(vm);
         }
 
         public IActionResult Delete(int id)
@@ -82,6 +96,7 @@ namespace ParkingLotApp.WebUI.Controllers
         {
             var ParkingLot = _parkinglotService.GetById(id);
 
+            GetParkingLotTypes();
             return View("Form", ParkingLot); //Edit.cshtml, renamed to Form.cshtml
         }
 
