@@ -15,19 +15,19 @@
         <th>Location</th>
     </tr>
 
-    @foreach (var parkingSpace in Model)
-    {
-        <tr>
-            <td>@parkingSpace.AppUserId</td>
-            <td>@parkingSpace.Driver</td>
-            <td>@parkingSpace.ParkingSpaceId</td>
-            <td>@parkingSpace.ParkingLot</td>
-            <td>@parkingSpace.Reserved</td>
-            <td>
-                <a asp-controller="ParkingSpace" asp-action="spaces" asp-route-id="@parkingSpace.ParkingSpaceId">Spaces</a>
-            </td>
-        </tr>
-    }
+    <!--
+      foreach (var parkingSpace in Model)
+     {
+         <tr>
+             <td>parkingSpace.AppUserId</td>
+             <td>parkingSpace.Driver</td>
+             <td>parkingSpace.ParkingSpaceId</td>
+             <td>parkingSpace.ParkingLot</td>
+             <td>parkingSpace.Reserved</td>
+
+         </tr>
+    -->
+    
 </table>
 
 

@@ -8,8 +8,7 @@ namespace ParkingLotApp.WebUI.ViewModels
 {
     public class AddParkingSpaceViewModel
     {
-        public int ParkingSpaceId { get; set; }
-
+        
         public ParkingLot parkingLot { get; set; }
 
         public ParkingSpace parkingSpace { get; set; }

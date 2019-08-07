@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using ParkingLotApp.Service.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using ParkingLotApp.WebUI.ViewModels;
 
 namespace ParkingLotApp.WebUI.Controllers
 {
@@ -16,6 +17,7 @@ namespace ParkingLotApp.WebUI.Controllers
         private const string PARKINGLOTTYPE = "ParkingLotTypes";
         private readonly IParkingLotService _parkinglotService;
         private readonly IParkingLotTypeService _parkingLotTypeService;
+        private readonly IParkingSpaceService _parkingSpaceService;
         private readonly UserManager<AppUser> _userManager;
 
         public ParkingLotController(IParkingLotService parkingLotService, 
@@ -66,12 +68,15 @@ namespace ParkingLotApp.WebUI.Controllers
             return View("Form");
         }
 
-        [Authorize(Roles ="Driver")]
+        [Authorize(Roles = "Driver")]
         public IActionResult Detail(int id)  //get id from URL
         {
-            var ParkingLot = _parkinglotService.GetById(id);
+            AddParkingSpaceViewModel vm = new AddParkingSpaceViewModel();
 
-            return View(ParkingLot);
+                vm.parkingLot = _parkinglotService.GetById(id);
+              //  vm.parkingSpace = _parkingSpaceService.GetById(spaceId);
+        
+            return View(vm);
         }
 
         public IActionResult Delete(int id)
