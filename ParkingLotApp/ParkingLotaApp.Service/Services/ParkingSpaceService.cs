@@ -1,4 +1,6 @@
-﻿using ParkingLotApp.Domain.Model;
+﻿using ParkingLotApp.Data.Interfaces;
+using ParkingLotApp.Domain.Model;
+using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +10,7 @@ namespace ParkingLotApp.Service.Services
     public interface IParkingSpaceService
     {
         //Read
-        ParkingSpace GetById(int id);
+        ParkingSpace GetById(int spaceId);
         ICollection<ParkingSpace> GetAllParkingSpaces();
 
         //Create
@@ -21,7 +23,42 @@ namespace ParkingLotApp.Service.Services
         bool Delete(int id);
     }
 
-   
+    public class ParkingSpaceService : IParkingSpaceService
+    {
+        private readonly IParkingSpaceRepository _parkingSpaceRepository;
+
+        public ParkingSpaceService(IParkingSpaceRepository parkingSpaceRepository)
+        {
+            _parkingSpaceRepository = parkingSpaceRepository;
+        }
+            
+        ParkingSpace IParkingSpaceService.GetById(int spaceId)
+        {
+            return _parkingSpaceRepository.GetById(spaceId);
+        }
+
+        public ICollection<ParkingSpace> GetAllParkingSpaces()
+        {
+            return _parkingSpaceRepository.GetAllParkingSpaces();
+        }
+
+        public ParkingSpace Create(ParkingSpace newparkingSpace)
+        {
+            return _parkingSpaceRepository.Create(newparkingSpace);
+        }
+
+        public ParkingSpace Update(ParkingSpace updatedparkingSpace)
+        {
+            return _parkingSpaceRepository.Update(updatedparkingSpace);
+        }
+
+        public bool Delete(int spaceId)
+        {
+            return _parkingSpaceRepository.Delete(spaceId);
+        }
+    }
+
+
 
 
 }

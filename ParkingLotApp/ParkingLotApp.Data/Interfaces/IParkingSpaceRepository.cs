@@ -5,10 +5,10 @@ using System.Text;
 
 namespace ParkingLotApp.Data.Interfaces
 {
-    interface IParkingSpaceRepository
+    public interface IParkingSpaceRepository
     {
         //Read
-        ParkingSpace GetById(int id);
+        ParkingSpace GetById(int spaceId);
         ICollection<ParkingSpace> GetAllParkingSpaces();
 
         //Create

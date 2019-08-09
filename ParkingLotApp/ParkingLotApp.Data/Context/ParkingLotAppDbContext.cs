@@ -16,6 +16,7 @@ namespace ParkingLotApp.Data.Context
        //They map to table by default
         public DbSet<ParkingLot> parkingLots { get; set; }
         public DbSet<ParkingLotType> ParkingLotTypes { get; set; }
+        public  DbSet<ParkingSpace> ParkingSpaces { get; set; }
         public DbSet<ReserveParkingSpace>ReserveParkingSpaces { get; set; }
 
         //Virtual method designed to be overridden
@@ -25,7 +26,7 @@ namespace ParkingLotApp.Data.Context
             //Connection string is divided in 3 elements
             //server - database - authentication
             //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=parkinglotapp;Trusted_Connection=true");
-            optionsBuilder.UseSqlite("Data Source=app-parkingLotApp.db");
+            optionsBuilder.UseSqlite("Data Source=app-NEWparkingLotApp.db", b => b.MigrationsAssembly("ParkingLotApp.WebUI"));
         }
 
         //We can manipulate the models

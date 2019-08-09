@@ -22,10 +22,12 @@ namespace ParkingLotApp.WebUI.Controllers
 
         public ParkingLotController(IParkingLotService parkingLotService, 
             IParkingLotTypeService parkingLotTypeService,
+            IParkingSpaceService parkingSpaceService,
             UserManager<AppUser> userManager)
         {
             _parkinglotService = parkingLotService;
             _parkingLotTypeService = parkingLotTypeService;
+            _parkingSpaceService = parkingSpaceService;
             _userManager = userManager;
         }
         //parkinglot/index
@@ -74,7 +76,7 @@ namespace ParkingLotApp.WebUI.Controllers
             AddParkingSpaceViewModel vm = new AddParkingSpaceViewModel();
 
                 vm.parkingLot = _parkinglotService.GetById(id);
-              //  vm.parkingSpace = _parkingSpaceService.GetById(spaceId);
+                vm.parkingSpace = _parkingSpaceService.GetById(id);
         
             return View(vm);
         }

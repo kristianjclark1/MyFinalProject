@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkingLotApp.Data.Context;
 
-namespace ParkingLotApp.Data.Migrations
+namespace ParkingLotApp.WebUI.Migrations
 {
     [DbContext(typeof(ParkingLotAppDbContext))]
-    [Migration("20190611001651_initial-for-sqlite")]
-    partial class initialforsqlite
+    [Migration("20190809221947_parkingSpace")]
+    partial class parkingSpace
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,15 +43,15 @@ namespace ParkingLotApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "031eec68-9291-4a1a-80de-77f9db3fdfa1",
-                            ConcurrencyStamp = "f30bb96d-37bc-4e77-b948-1c9ed4b924ed",
+                            Id = "6bbce34e-f2b9-44f8-8836-d07bb4601c4f",
+                            ConcurrencyStamp = "193c4c20-660f-4763-9576-c7928fe4653a",
                             Name = "Driver",
                             NormalizedName = "DRIVER"
                         },
                         new
                         {
-                            Id = "b9402d1d-24c6-4ea1-a2b9-74a503ff535d",
-                            ConcurrencyStamp = "b28aaca0-f949-4e16-9f4f-f960e16b68ad",
+                            Id = "4c58909e-108c-4169-a44a-d54d94a971bc",
+                            ConcurrencyStamp = "8d466d94-d8e0-45ad-b86d-788c7c909387",
                             Name = "ParkingSpace",
                             NormalizedName = "PARKINGSPACE"
                         });
@@ -217,7 +217,7 @@ namespace ParkingLotApp.Data.Migrations
 
                     b.Property<int>("ParkingLotTypeId");
 
-                    b.Property<int>("Size");
+                    b.Property<double>("Size");
 
                     b.Property<int>("Spaces");
 
@@ -256,6 +256,26 @@ namespace ParkingLotApp.Data.Migrations
                             Id = 3,
                             Description = "Business"
                         });
+                });
+
+            modelBuilder.Entity("ParkingLotApp.Domain.Model.ParkingSpace", b =>
+                {
+                    b.Property<int>("ParkingSpaceId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AppUserId");
+
+                    b.Property<int?>("ParkingLotId");
+
+                    b.Property<bool>("Reserved");
+
+                    b.HasKey("ParkingSpaceId");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("ParkingLotId");
+
+                    b.ToTable("ParkingSpaces");
                 });
 
             modelBuilder.Entity("ParkingLotApp.Domain.Model.ReserveParkingSpace", b =>
@@ -328,6 +348,17 @@ namespace ParkingLotApp.Data.Migrations
                         .WithMany()
                         .HasForeignKey("ParkingLotTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ParkingLotApp.Domain.Model.ParkingSpace", b =>
+                {
+                    b.HasOne("ParkingLotApp.Domain.Model.AppUser", "Driver")
+                        .WithMany()
+                        .HasForeignKey("AppUserId");
+
+                    b.HasOne("ParkingLotApp.Domain.Model.ParkingLot", "ParkingLot")
+                        .WithMany("ParkingSpaces")
+                        .HasForeignKey("ParkingLotId");
                 });
 
             modelBuilder.Entity("ParkingLotApp.Domain.Model.ReserveParkingSpace", b =>
