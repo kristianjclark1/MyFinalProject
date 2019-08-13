@@ -27,6 +27,16 @@ namespace ParkingLotApp.Data.Implementation.SqlServer
             }
         }
 
+        public List<ParkingSpace> GetParkingSpace(ParkingLot lot)
+        {
+            using (var context = new ParkingLotAppDbContext())
+            {
+                //return spaces in lot
+                return context.ParkingSpaces.Where(x => x.ParkingLot == lot).ToList();
+
+            }
+        }
+
         public ParkingSpace Create(ParkingSpace newparkingSpace)
         {
             using (var context = new ParkingLotAppDbContext())

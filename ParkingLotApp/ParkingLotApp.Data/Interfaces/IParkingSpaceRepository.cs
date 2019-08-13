@@ -19,6 +19,8 @@ namespace ParkingLotApp.Data.Interfaces
 
         //Delete
         bool Delete(int id);
+
+        List<ParkingSpace> GetParkingSpace(ParkingLot lot);
     }
 }
        

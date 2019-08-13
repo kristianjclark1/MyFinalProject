@@ -1,4 +1,5 @@
-﻿using ParkingLotApp.Domain.Model;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using ParkingLotApp.Domain.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,13 @@ namespace ParkingLotApp.WebUI.ViewModels
     {
         
         public ParkingLot parkingLot { get; set; }
+
+        public List<ParkingSpace> Spaces { get; set; }
+
+        public IEnumerable<SelectListItem> ParkingSpaces
+        {
+            get { return new SelectList(Spaces, "ParkingSpaceId"); }
+        }
 
         public ParkingSpace parkingSpace { get; set; }
 

@@ -9,13 +9,12 @@
     
 </div>
 
-<div id='groupList' class='col-lg-6' style='padding-top:15px'>
-    <div class='content'>
-        <ejs-dropdownlist id="parkingspot" placeholder="Select a parking spot" popupHeight="200px" dataSource="@ViewBag.data">
-            <e-dropdownlist-fields groupBy="Category" value="ParkingSpace"></e-dropdownlist-fields>
-        </ejs-dropdownlist>
-    </div>
-</div>
+@Html.DropDownListFor(x => x.parkingSpace, Model.ParkingSpaces)
+
+<select class="form-control" id="parkingSpace" name="parkingSpace">
+    <option>Select Space</option>
+    
+</select>
 
 <table class="table">
     <tr>

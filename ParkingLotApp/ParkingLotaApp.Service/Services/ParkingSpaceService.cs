@@ -21,6 +21,8 @@ namespace ParkingLotApp.Service.Services
 
         //Delete
         bool Delete(int id);
+
+        List<ParkingSpace>GetParkingSpace(ParkingLot lot);
     }
 
     public class ParkingSpaceService : IParkingSpaceService
@@ -51,7 +53,11 @@ namespace ParkingLotApp.Service.Services
         {
             return _parkingSpaceRepository.Update(updatedparkingSpace);
         }
-
+        
+        public List<ParkingSpace> GetParkingSpace(ParkingLot lot)
+        {
+            return _parkingSpaceRepository.GetParkingSpace(lot);
+        }
         public bool Delete(int spaceId)
         {
             return _parkingSpaceRepository.Delete(spaceId);

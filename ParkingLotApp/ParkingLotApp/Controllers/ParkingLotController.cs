@@ -8,6 +8,7 @@ using ParkingLotApp.Service.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using ParkingLotApp.WebUI.ViewModels;
+using ParkingLotApp.Data.Context;
 
 namespace ParkingLotApp.WebUI.Controllers
 {
@@ -63,6 +64,23 @@ namespace ParkingLotApp.WebUI.Controllers
             {
                //We should be able to add the new parking lot
                 _parkinglotService.Create(newParkingLot);
+
+                //create parking spaces
+                for(int i=0; i<newParkingLot.Spaces; i++)
+                {
+                    ParkingSpace lot = new ParkingSpace
+                    {
+                        ParkingSpaceId = i,
+                        ParkingLot = newParkingLot,
+                        Reserved = false
+
+                    };
+                    using (var context = new ParkingLotAppDbContext())
+                    {
+                        context.Add(lot);
+                    }
+                }
+
                 return RedirectToAction(nameof(Index)); // ->Index()
             }
 
@@ -76,7 +94,8 @@ namespace ParkingLotApp.WebUI.Controllers
             AddParkingSpaceViewModel vm = new AddParkingSpaceViewModel();
 
                 vm.parkingLot = _parkinglotService.GetById(id);
-                vm.parkingSpace = _parkingSpaceService.GetById(id);
+            vm.parkingSpace = _parkingSpaceService.GetById(id);
+            vm.Spaces = _parkingSpaceService.GetParkingSpace(vm.parkingLot);
         
             return View(vm);
         }

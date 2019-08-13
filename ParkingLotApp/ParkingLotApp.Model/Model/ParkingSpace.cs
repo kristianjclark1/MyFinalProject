@@ -6,12 +6,14 @@ namespace ParkingLotApp.Domain.Model
 {
     public class ParkingSpace
     {
-        public string AppUserId { get; set; }
-        public AppUser Driver { get; set; }
+      
+       
 
         public int ParkingSpaceId { get; set; }
         public ParkingLot ParkingLot { get; set; }
 
         public bool Reserved { get; set; }
+
+        
     }
 }
